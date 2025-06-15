@@ -1,7 +1,7 @@
 // MODULO TEMPORARIO
-// TESTES MODULO UNIVERSIDADE
+// TESTES MODULO INSTITUICAO
 
-#include "uni.h"
+#include "inst.h"
 
 int main(){
 	return 0;
