@@ -87,7 +87,24 @@ int criaAvaliacao(AvalComp novaAval){
     return 1;
 }
 
-AvalComp* acessaAvaliacao(int idAval);
+AvalComp* acessaAvaliacao(int idAval){
+    Node* lst = arq2lst();
+    
+    Node* noAval = findNode(lst, idAval);
+    if(noAval == NULL) 
+        return NULL;
+    
+    Aval* av = (Aval*)(noAval->obj);
+    
+    AvalComp* aval = (AvalComp*)malloc(sizeof(AvalComp));
+    aval->id     = av->id;
+    aval->idInst = av->idInst;
+    strcpy(aval->autor, av->autor);
+    strcpy(aval->texto, av->texto);
+
+    return aval;
+}
+
 // apenas texto será modificado
 AvalComp* modificaAvaliacao(int idAval, AvalComp novaAval);
 int deletaAvaliacao(int idAval);
