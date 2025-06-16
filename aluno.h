@@ -6,4 +6,7 @@
 // Modulo Aluno
 
 typedef struct aluno Aluno;
-// struct aluno{...};
+struct aluno{
+    char nomeUsu[25];
+    char senha[25];
+};

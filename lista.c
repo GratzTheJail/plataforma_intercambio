@@ -1,2 +1,0 @@
-// MODULO GENERICO LISTA ENCADEADA
-#include "lista.h"
