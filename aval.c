@@ -10,6 +10,14 @@
 
 #define ARQUIVO "arquivos/avaliacoes.txt"
 
+typedef struct avaliacoes Aval;
+struct avaliacoes{
+    int id;
+    char texto[400];
+    char autor[25];
+    int idInst;
+};
+
 Node* avaliacoes = NULL;
 
 void lst2arq(Node* avals){
@@ -46,7 +54,7 @@ Node* arq2lst(){
 // id é calculado (independe do parâmetro)
 // uma avaliação NÃO PODE ter no seu campo texto nem autor nenhum caractere ';'
 // TODO: perguntar se podemos mudar algo do q botamos originalmente pq foi uma ideia ruim
-Aval* criaAvaliacao(Aval novaAval){
+int criaAvaliacao(AvalComp novaAval){
     Node* lst = arq2lst();
     
     for(char* c = strchr(novaAval.texto, ';'); c != NULL; c = strchr(novaAval.texto, ';')){
@@ -65,7 +73,9 @@ Aval* criaAvaliacao(Aval novaAval){
     lst = preInsert(lst, id);
     
     Aval* av = (Aval*)malloc(sizeof(Aval));
-    *av = novaAval;
+    strcpy(av->autor, novaAval.autor);
+    strcpy(av->texto, novaAval.texto);
+    av->idInst = novaAval.idInst;
     av->id = id;
 
     lst->obj = (void*)av;
@@ -74,13 +84,13 @@ Aval* criaAvaliacao(Aval novaAval){
 
     lst = deleteList(lst);
 
-    return av; // TODO: mudar caso o prof deixe mudar a ideia original, retornar se foi possivel ou n inserir por int
+    return 1;
 }
 
-Aval* acessaAvaliacao(int idAval);
+AvalComp* acessaAvaliacao(int idAval);
 // apenas texto será modificado
-Aval* modificaAvaliacao(int idAval, Aval novaAval);
+AvalComp* modificaAvaliacao(int idAval, AvalComp novaAval);
 int deletaAvaliacao(int idAval);
 
-Aval** acessaAvaliacoesInst(int idInst, int* tam);
-Aval** acessaAvaliacoesAluno(char* nomeUsu, int* tam);
+AvalComp** acessaAvaliacoesInst(int idInst, int* tam);
+AvalComp** acessaAvaliacoesAluno(char* nomeUsu, int* tam);

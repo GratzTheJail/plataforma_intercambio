@@ -1,7 +1,13 @@
 // MODULO TEMPORARIO
 // TESTES MODULO AVALIAÇÕES
-
+#ifndef AVAL
+#define AVAL
 #include "aval.h"
+#endif
+#ifndef AVALCOMP
+#define AVALCOMP
+#include "avalcomp.h"
+#endif
 #ifndef LIST
 #define LIST
 #include "list/list.h"
@@ -11,7 +17,7 @@
 
 int main(){
 	// EU
-	Aval aval; 
+	AvalComp aval; 
 
 	strcpy(aval.autor, "The; Jail");
 	strcpy(aval.texto, "Melhor ;faculdade do mundo!");
@@ -21,7 +27,7 @@ int main(){
 	criaAvaliacao(aval);
 
 	
-	// // MARY 
+	// MARY 
 	strcpy(aval.autor, "Mary Tony;");
 	strcpy(aval.texto, "Mellieur; faculté de mondé!");
 	aval.idInst = 333;
