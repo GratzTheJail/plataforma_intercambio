@@ -12,7 +12,6 @@
 #define LIST
 #include "list/list.h"
 #endif
-#include <stdlib.h>
 #include <string.h>
 
 int main(){
