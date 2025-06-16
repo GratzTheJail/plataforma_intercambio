@@ -10,61 +10,39 @@
 #include <string.h>
 
 int main(){
-	Node* lst = NULL;
-
 	// EU
-	Aval avalEu; 
+	Aval aval; 
 
-	strcpy(avalEu.autor, "The Jail");
-	strcpy(avalEu.texto, "Melhor faculdade do mundo!");
-	avalEu.idInst = 123;
-	avalEu.id = 0;
+	strcpy(aval.autor, "The; Jail");
+	strcpy(aval.texto, "Melhor ;faculdade do mundo!");
+	aval.idInst = 123;
+	aval.id = 0;
 
-	lst = preInsert(lst, avalEu.id);
-	lst->obj = (void*)&avalEu;
+	criaAvaliacao(aval);
 
+	
+	// // MARY 
+	strcpy(aval.autor, "Mary Tony;");
+	strcpy(aval.texto, "Mellieur; faculté de mondé!");
+	aval.idInst = 333;
+	aval.id = 1;
 
-	// MARY
-	Aval avalMary; 
-
-	strcpy(avalMary.autor, "Mary Tony");
-	strcpy(avalMary.texto, "Mellieur faculté de mondé!");
-	avalMary.idInst = 333;
-	avalMary.id = 1;
-
-	lst = preInsert(lst, avalMary.id);
-	lst->obj = (void*)&avalMary;
-
-
+	criaAvaliacao(aval);
+	
+	
 	// ISA
-	Aval avalIsa; 
+	strcpy(aval.autor, "Isabela Melo");
+	strcpy(aval.texto, "Ja fui a faculdades melhores;...");
+	aval.idInst = 123;
+	aval.id = 2;
 
-	strcpy(avalIsa.autor, "Isabela Melo");
-	strcpy(avalIsa.texto, "Ja fui a faculdades melhores...");
-	avalIsa.idInst = 123;
-	avalIsa.id = 2;
-
-	lst = preInsert(lst, avalIsa.id);
-	lst->obj = (void*)&avalIsa;
-
-	// PRINTS
-	printList(lst);
-
-	for(Node* p = lst; p != NULL; p = p->next){
-		printf("%s disse sobre %d:\n%s\n\n", ((Aval*)p->obj)->autor, ((Aval*)p->obj)->idInst, ((Aval*)p->obj)->texto);
-	}
-
-	lst2arq(lst);
-	lst = deleteList(lst);
-
-	lst = arq2lst();
-
-	printList(lst);
-	for(Node* p = lst; p != NULL; p = p->next){
-		printf("%s disse sobre %d:\n%s\n\n", ((Aval*)p->obj)->autor, ((Aval*)p->obj)->idInst, ((Aval*)p->obj)->texto);
-	}
-
-	lst = deleteList(lst);
-
+	criaAvaliacao(aval);
 	return 0;
 }
+
+/*
+COMPILAÇÃO USANDO:
+Linux Fedora 42
+gcc 15.1.1
+gcc -Wall -o progAval testeAval.c aval.c list/list.c
+*/

@@ -6,6 +6,7 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define ARQUIVO "arquivos/avaliacoes.txt"
 
@@ -43,11 +44,17 @@ Node* arq2lst(){
 }
 
 // id é calculado (independe do parâmetro)
-// uma avaliação NÃO PODE ter no seu campo texto nenhum caractere ';'
+// uma avaliação NÃO PODE ter no seu campo texto nem autor nenhum caractere ';'
 // TODO: perguntar se podemos mudar algo do q botamos originalmente pq foi uma ideia ruim
 Aval* criaAvaliacao(Aval novaAval){
-// TODO: criar check se há caractere ';' no campo de texto
     Node* lst = arq2lst();
+    
+    for(char* c = strchr(novaAval.texto, ';'); c != NULL; c = strchr(novaAval.texto, ';')){
+        strcpy(c, c + 1);
+    }
+    for(char* c = strchr(novaAval.autor, ';'); c != NULL; c = strchr(novaAval.autor, ';')){
+        strcpy(c, c + 1);
+    }
     int id;
     
     if(lst == NULL)
