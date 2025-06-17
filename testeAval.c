@@ -3,6 +3,7 @@
 #ifndef AVAL
 #define AVAL
 #include "aval.h"
+#include <stdlib.h>
 #endif
 #ifndef AVALCOMP
 #define AVALCOMP
@@ -22,6 +23,7 @@ int main(){
 	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 	printf("TESTES DE INSERÇÃO:\n");
+	printf("-------------------\n");
 	
 	// 0
 	strcpy(aval.autor, "The; Jail");
@@ -58,10 +60,14 @@ int main(){
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
 	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
-	
+	printf("-------------------------------------------------\n");
+
+
 
 	// TESTES DE BUSCA
 	printf("TESTES DE BUSCA:\n");
+	printf("----------------\n");
+	// caso: encontrado
 	printf("Busca do índice %d:\n", 1);
 	AvalComp* busca = acessaAvaliacao(1);
 	if(busca == NULL)
@@ -70,6 +76,7 @@ int main(){
 	 	printf("Encontrado: Autor: %s\tInstituição: %d\nTexto: %s\n", 
 			busca->autor, busca->idInst, busca->texto);
 	
+	// caso: nao encontrado
 	printf("-------------------------------------------------\n");
 	printf("Busca do índice %d:\n", -1341);
 	busca = acessaAvaliacao(-1341);
@@ -78,10 +85,56 @@ int main(){
 	else
 	 	printf("Encontrado: Autor: %s\tInstituição: %d\nTexto: %s\n", 
 			busca->autor, busca->idInst, busca->texto);
+	
+	free(busca);
+	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 
 
+
+	// TESTES DE MODIFICAÇÃO
+	printf("TESTES DE MODIFICAÇÃO:\n");
+	printf("----------------------\n");
+	
+	// caso: encontrado
+	printf("Modificação do texto do índice %d:\n", 2);
+	
+	busca = acessaAvaliacao(1);
+	if(busca != NULL)
+		printf("Antes:\n%s\n", busca->texto);
+	free(busca);
+	
+	AvalComp modifica;
+	strcpy(modifica.texto, "Essa faculdade é meio ruim...");
+	
+	if(modificaAvaliacao(1, modifica)){
+		busca = acessaAvaliacao(1);
+		if(busca != NULL)
+			printf("\nDepois:\n%s\nModificado com sucesso :)\n", busca->texto);
+	} else {
+		printf("Não encontrado...\n");
+	}
+	printf("-------------------------------------------------\n");
+
+	// caso: nao encontrado
+	printf("Modificação do texto do índice %d:\n", -2342);
+	
+	busca = acessaAvaliacao(-2342);
+	if(busca != NULL)
+		printf("Antes:\n%s\n", busca->texto);
+	free(busca);
+	
+	strcpy(modifica.texto, "Essa faculdade é meio ruim...");
+	
+	if(modificaAvaliacao(-2342, modifica)){
+		busca = acessaAvaliacao(-2342);
+		if(busca != NULL)
+			printf("\nDepois:\n%s\nModificado com sucesso :)\n", busca->texto);
+	} else {
+		printf("Não encontrado...\n");
+	}
+	printf("-------------------------------------------------\n");
 
 	return 0;
 }

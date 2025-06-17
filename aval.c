@@ -131,15 +131,36 @@ AvalComp* acessaAvaliacao(int idAval){
     if(noAval == NULL) 
         return NULL;
     
-    // transforma Aval* em AvalComp*
+    // transforma Aval* achado em AvalComp*
     Aval* av = (Aval*)(noAval->obj);
     AvalComp* aval = aval2avcomp(av);
+
+    deleteList(lst);
 
     return aval;
 }
 
 // apenas texto será modificado
-AvalComp* modificaAvaliacao(int idAval, AvalComp novaAval);
+// não lida com problemas de string 
+// retorna 1 se modificou e 0 se não encontrou
+int modificaAvaliacao(int idAval, AvalComp novaAval){
+    Node* lst = arq2lst();
+    
+    // busca no com id especificado
+    Node* noAval = findNode(lst, idAval);
+    if(noAval == NULL) 
+        return 0;
+
+    // muda texto da aval na lista
+    Aval* av = (Aval*)(noAval->obj);
+    strcpy(av->texto, novaAval.texto);
+
+    // escreve e libera memoria
+    lst2arq(lst);
+    deleteList(lst);
+
+    return 1;
+}
 int deletaAvaliacao(int idAval);
 
 AvalComp** acessaAvaliacoesInst(int idInst, int* tam);
