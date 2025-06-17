@@ -63,6 +63,16 @@ AvalComp* aval2avcomp(Aval* av){
     return aval;
 }
 
+Aval* avcomp2aval(AvalComp* aval){
+    Aval* av = (Aval*)malloc(sizeof(Aval));
+    strcpy(av->autor, aval->autor);
+    strcpy(av->texto, aval->texto);
+    av->idInst = aval->idInst;
+    av->id = aval->id;
+
+    return av;
+}
+
 // ---------
 // INTERFACE
 // ---------
@@ -89,11 +99,8 @@ int criaAvaliacao(AvalComp novaAval){
 
     lst = preInsert(lst, id);
     
-    Aval* av = (Aval*)malloc(sizeof(Aval));
-    strcpy(av->autor, novaAval.autor);
-    strcpy(av->texto, novaAval.texto);
-    av->idInst = novaAval.idInst;
-    av->id = id;
+    novaAval.id = id;
+    Aval* av = avcomp2aval(&novaAval);
 
     lst->obj = (void*)av;
 
