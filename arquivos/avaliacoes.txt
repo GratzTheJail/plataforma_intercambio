@@ -1,15 +1,3 @@
-14;Ja fui a faculdades melhores...;Isabela Melo;123;
-13;Mellieur faculté de mondé!;Mary Tony;333;
-12;Melhor faculdade do mundo!;The Jail;123;
-11;Ja fui a faculdades melhores...;Isabela Melo;123;
-10;Mellieur faculté de mondé!;Mary Tony;333;
-9;Melhor faculdade do mundo!;The Jail;123;
-8;Ja fui a faculdades melhores...;Isabela Melo;123;
-7;Mellieur faculté de mondé!;Mary Tony;333;
-6;Melhor faculdade do mundo!;The Jail;123;
-5;Ja fui a faculdades melhores...;Isabela Melo;123;
-4;Mellieur faculté de mondé!;Mary Tony;333;
-3;Melhor faculdade do mundo!;The Jail;123;
 2;Ja fui a faculdades melhores...;Isabela Melo;123;
 1;Mellieur faculté de mondé!;Mary Tony;333;
 0;Melhor faculdade do mundo!;The Jail;123;

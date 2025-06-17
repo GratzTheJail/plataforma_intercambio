@@ -20,8 +20,26 @@ struct avaliacoes{
 
 Node* avaliacoes = NULL;
 
-void lst2arq(Node* avals){
+// ----------
+// AUXILIARES
+// ----------
+
+Node *deletaLista(Node *top) {
+    Node *current = top;
+    while (current != NULL) {
+        Node *next = current->next;
+        if (current->obj != NULL) {
+            free(current->obj);  // Libera o objeto
+        }
+        free(current);           // Libera o nó
+        current = next;
+    }
+    return NULL;
+}
+
+void lst2arq(Node* lst){
     FILE* arq = fopen(ARQUIVO, "w");
+    Node* avals = lst;
     for(; avals != NULL; avals = avals->next){
         Aval* aval = (Aval*)avals->obj;
         fprintf(arq, "%d;", aval->id);
@@ -51,53 +69,25 @@ Node* arq2lst(){
     return lst;
 }
 
-// id é calculado (independe do parâmetro)
-// uma avaliação NÃO PODE ter no seu campo texto nem autor nenhum caractere ';'
-// TODO: perguntar se podemos mudar algo do q botamos originalmente pq foi uma ideia ruim
-int criaAvaliacao(AvalComp novaAval){
-    Node* lst = arq2lst();
-    
-    for(char* c = strchr(novaAval.texto, ';'); c != NULL; c = strchr(novaAval.texto, ';')){
-        strcpy(c, c + 1);
-    }
-    for(char* c = strchr(novaAval.autor, ';'); c != NULL; c = strchr(novaAval.autor, ';')){
-        strcpy(c, c + 1);
-    }
-    int id;
-    
-    if(lst == NULL)
-        id = 0;
-    else
-        id = lst->n + 1;
-
-    lst = preInsert(lst, id);
-    
+// nao pode passar ponteiro nulo 
+Aval* avcmp2av(AvalComp* aval){
     Aval* av = (Aval*)malloc(sizeof(Aval));
-    strcpy(av->autor, novaAval.autor);
-    strcpy(av->texto, novaAval.texto);
-    av->idInst = novaAval.idInst;
-    av->id = id;
+    if(av == NULL) exit(1);
 
-    lst->obj = (void*)av;
+    av->id = aval->id;
+    av->idInst = aval->idInst;
+    strcpy(av->autor, aval->autor);
+    strcpy(av->texto, aval->texto);
 
-    lst2arq(lst);
-
-    lst = deleteList(lst);
-
-    return 1;
+    return av;
 }
 
-AvalComp* acessaAvaliacao(int idAval){
-    Node* lst = arq2lst();
-    
-    Node* noAval = findNode(lst, idAval);
-    if(noAval == NULL) 
-        return NULL;
-    
-    Aval* av = (Aval*)(noAval->obj);
-    
-    AvalComp* aval = (AvalComp*)malloc(sizeof(AvalComp));
-    aval->id     = av->id;
+// nao pode passar ponteiro nulo 
+AvalComp* av2avcmp(Aval* av){
+    AvalComp* aval = (AvalComp*)malloc(sizeof(Aval));
+    if(aval == NULL) exit(1);
+
+    aval->id = av->id;
     aval->idInst = av->idInst;
     strcpy(aval->autor, av->autor);
     strcpy(aval->texto, av->texto);
@@ -105,9 +95,104 @@ AvalComp* acessaAvaliacao(int idAval){
     return aval;
 }
 
-// apenas texto será modificado
-AvalComp* modificaAvaliacao(int idAval, AvalComp novaAval);
-int deletaAvaliacao(int idAval);
+// funcao auxiliar de busca de avaliação do tipo estruturado Aval para outras buscas
+Aval* buscaAval(Node* lst, int id){
+    Node* noAval = findNode(lst, id);
+    if(noAval == NULL) 
+        return NULL;
 
-AvalComp** acessaAvaliacoesInst(int idInst, int* tam);
-AvalComp** acessaAvaliacoesAluno(char* nomeUsu, int* tam);
+    Aval* av = (Aval*)(noAval->obj);
+
+    return av;
+}
+
+
+// ----------------------
+// PRINCIPAIS / INTERFACE
+// ----------------------
+
+
+// id é calculado (independe do parâmetro)
+// uma avaliação NÃO PODE ter no seu campo texto nem autor nenhum caractere ';'
+// TODO: perguntar se podemos mudar algo do q botamos originalmente pq foi uma ideia ruim
+int criaAvaliacao(AvalComp novaAval){
+    Node* lst = arq2lst();
+    
+    // retira caracteres ';' 
+    for(char* c = strchr(novaAval.texto, ';'); c != NULL; c = strchr(novaAval.texto, ';')){
+        strcpy(c, c + 1);
+    }
+    for(char* c = strchr(novaAval.autor, ';'); c != NULL; c = strchr(novaAval.autor, ';')){
+        strcpy(c, c + 1);
+    }
+
+    
+    // calcula ID
+    int id;
+    if(lst == NULL)
+        id = 0;
+    else
+        id = lst->n + 1;
+    
+    // insere com ID calculado
+    lst = preInsert(lst, id);
+    
+    // converte de AvalComp (tipo compartilhado) para Aval (tipo especifico)
+    Aval* av = avcmp2av(&novaAval);
+
+    lst->obj = (void*)av;
+    fprintf(stderr, "Cria %s\n", novaAval.autor);
+
+    // escreve arquivo e deleta lista
+    lst2arq(lst);
+    deletaLista(lst);
+
+    return 1;
+}
+
+AvalComp* acessaAvaliacao(int idAval){
+    Node* lst = arq2lst();
+
+    Aval* av = buscaAval(lst, idAval);
+    if(av == NULL)
+        return NULL;
+    
+    AvalComp* aval = av2avcmp(av);
+
+    deletaLista(lst);
+
+    return aval;
+}
+
+// apenas texto será modificado
+int modificaAvaliacao(int idAval, AvalComp novaAval){
+    Node* lst = arq2lst();
+
+    Aval* av = buscaAval(lst, idAval);
+    if(av == NULL)
+        return 0;
+
+    Aval* novaAv = avcmp2av(&novaAval);
+    strcpy(av->texto, novaAv->texto);
+
+    lst2arq(lst);
+    free(novaAv);
+
+    return 1;
+}
+
+// TODO: terminar essa merda
+int deletaAvaliacao(int idAval){
+    Node* lst = arq2lst();
+
+    Aval* av = buscaAval(lst, idAval);
+    if(av == NULL)
+        return 0;
+
+    // ...
+
+    return 0;
+}
+
+Node* acessaAvaliacoesInst(int idInst, int* tam);
+Node* acessaAvaliacoesAluno(char* nomeUsu, int* tam);
