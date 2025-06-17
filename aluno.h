@@ -4,9 +4,16 @@
  * Lorena Silveira dos Santos 			2312667
 */
 // Modulo Aluno
+#ifndef ALUNO_H
+#define ALUNO_H
 
-typedef struct aluno Aluno;
-struct aluno{
-    char nomeUsu[25];
-    char senha[25];
-};
+#include <stdbool.h>
+#include "alunoComp.h"
+
+AlunoComp* acessaAluno(char* nomeUsu);
+bool loginAluno(char* nomeUsu, char* senha);
+int criaAluno(AlunoComp novoAluno);
+AlunoComp* modificaAluno(char* nomeUsu, AlunoComp novoAluno);
+int deletaAluno(char* nomeUsu);
+
+#endif
