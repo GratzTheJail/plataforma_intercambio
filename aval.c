@@ -161,7 +161,22 @@ int modificaAvaliacao(int idAval, AvalComp novaAval){
 
     return 1;
 }
-int deletaAvaliacao(int idAval);
+
+int deletaAvaliacao(int idAval){
+    Node* lst = arq2lst();
+    
+    // busca no com id especificado
+    Node* noAval = findNode(lst, idAval);
+    if(noAval == NULL) 
+        return 0;
+
+    deleteNode(lst, idAval);
+
+    lst2arq(lst);
+    deleteList(lst);
+
+    return 1;
+}
 
 AvalComp** acessaAvaliacoesInst(int idInst, int* tam);
 AvalComp** acessaAvaliacoesAluno(char* nomeUsu, int* tam);

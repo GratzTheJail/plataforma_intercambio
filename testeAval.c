@@ -18,6 +18,7 @@
 
 int main(){
 	AvalComp aval; 
+	int id = 0;
 	
 	// TESTES INSERÇÃO
 	printf("-------------------------------------------------\n");
@@ -67,9 +68,11 @@ int main(){
 	// TESTES DE BUSCA
 	printf("TESTES DE BUSCA:\n");
 	printf("----------------\n");
+	
 	// caso: encontrado
-	printf("Busca do índice %d:\n", 1);
-	AvalComp* busca = acessaAvaliacao(1);
+	id = 1;
+	printf("Busca do índice %d:\n", id);
+	AvalComp* busca = acessaAvaliacao(id);
 	if(busca == NULL)
 		printf("Não encontrado :(\n");
 	else
@@ -77,9 +80,10 @@ int main(){
 			busca->autor, busca->idInst, busca->texto);
 	
 	// caso: nao encontrado
+	id = -1341;
 	printf("-------------------------------------------------\n");
-	printf("Busca do índice %d:\n", -1341);
-	busca = acessaAvaliacao(-1341);
+	printf("Busca do índice %d:\n", id);
+	busca = acessaAvaliacao(id);
 	if(busca == NULL)
 		printf("Não encontrado :(\n");
 	else
@@ -98,9 +102,10 @@ int main(){
 	printf("----------------------\n");
 	
 	// caso: encontrado
-	printf("Modificação do texto do índice %d:\n", 2);
+	id = 2;
+	printf("Modificação do texto do índice %d:\n", id);
 	
-	busca = acessaAvaliacao(1);
+	busca = acessaAvaliacao(id);
 	if(busca != NULL)
 		printf("Antes:\n%s\n", busca->texto);
 	free(busca);
@@ -108,8 +113,8 @@ int main(){
 	AvalComp modifica;
 	strcpy(modifica.texto, "Essa faculdade é meio ruim...");
 	
-	if(modificaAvaliacao(1, modifica)){
-		busca = acessaAvaliacao(1);
+	if(modificaAvaliacao(id, modifica)){
+		busca = acessaAvaliacao(id);
 		if(busca != NULL)
 			printf("\nDepois:\n%s\nModificado com sucesso :)\n", busca->texto);
 	} else {
@@ -118,23 +123,65 @@ int main(){
 	printf("-------------------------------------------------\n");
 
 	// caso: nao encontrado
-	printf("Modificação do texto do índice %d:\n", -2342);
+	id = -2342;
+	printf("Modificação do texto do índice %d:\n", id);
 	
-	busca = acessaAvaliacao(-2342);
+	busca = acessaAvaliacao(id);
 	if(busca != NULL)
 		printf("Antes:\n%s\n", busca->texto);
 	free(busca);
 	
 	strcpy(modifica.texto, "Essa faculdade é meio ruim...");
 	
-	if(modificaAvaliacao(-2342, modifica)){
-		busca = acessaAvaliacao(-2342);
+	if(modificaAvaliacao(id, modifica)){
+		busca = acessaAvaliacao(id);
 		if(busca != NULL)
 			printf("\nDepois:\n%s\nModificado com sucesso :)\n", busca->texto);
 	} else {
 		printf("Não encontrado...\n");
 	}
 	printf("-------------------------------------------------\n");
+	printf("-------------------------------------------------\n");
+	printf("-------------------------------------------------\n");
+
+	
+	
+	// TESTES DE EXCLUSÃO
+	printf("TESTES DE EXCLUSÃO:\n");
+	printf("----------------------\n");
+	
+	id = 0;
+	// caso: encontrado
+	printf("Exclusão do índice %d:\n", id);
+	
+	printf(">Atenção: caso neste primeiro caso diga que não houve sucesso, ");
+	printf("apague o banco de dados, pois o programa já foi rodado e a entrada já foi exluída.\n");
+	printf(">Quando o banco de dados for deletado, será re-criado com o índice %d nele\n", id);
+
+	if(deletaAvaliacao(id)){
+		busca = acessaAvaliacao(id);
+		if(busca == NULL)
+			printf("Deletado com sucesso :)\n");
+	} else {
+		printf("Não encontrado...\n");
+	}
+	printf("-------------------------------------------------\n");
+
+	id = -87090;
+	// caso: não encontrado
+	printf("Exclusão do índice %d:\n", id);
+	
+	if(deletaAvaliacao(id)){
+		busca = acessaAvaliacao(id);
+		if(busca == NULL)
+			printf("Deletado com sucesso :)\n");
+	} else {
+		printf("Não encontrado...\n");
+	}
+	printf("-------------------------------------------------\n");
+	printf("-------------------------------------------------\n");
+	printf("-------------------------------------------------\n");
+
 
 	return 0;
 }
