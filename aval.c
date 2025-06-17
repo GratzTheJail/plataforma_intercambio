@@ -53,7 +53,15 @@ Node* arq2lst(){
     return lst;
 }
 
+AvalComp* aval2avcomp(Aval* av){
+    AvalComp* aval = (AvalComp*)malloc(sizeof(AvalComp));
+    aval->id     = av->id;
+    aval->idInst = av->idInst;
+    strcpy(aval->autor, av->autor);
+    strcpy(aval->texto, av->texto);
 
+    return aval;
+}
 
 // ---------
 // INTERFACE
@@ -105,11 +113,7 @@ AvalComp* acessaAvaliacao(int idAval){
     
     Aval* av = (Aval*)(noAval->obj);
     
-    AvalComp* aval = (AvalComp*)malloc(sizeof(AvalComp));
-    aval->id     = av->id;
-    aval->idInst = av->idInst;
-    strcpy(aval->autor, av->autor);
-    strcpy(aval->texto, av->texto);
+    AvalComp* aval = aval2avcomp(av);
 
     return aval;
 }
