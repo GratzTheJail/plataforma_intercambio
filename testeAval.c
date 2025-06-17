@@ -72,6 +72,28 @@ int main(){
 	criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
 	printf("-------------------------------------------------\n");
+
+	// 4
+	strcpy(aval.autor, "Mary Tony;");
+	strcpy(aval.texto, "Essa faculdade é uma porcaria!");
+	aval.idInst = 222;
+	aval.id = 4;
+
+	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
+	criou = criaAvaliacao(aval);
+	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
+	printf("-------------------------------------------------\n");
+
+	// 5
+	strcpy(aval.autor, "The Jail");
+	strcpy(aval.texto, "Diese ist echt eine peinliche aber gute Universität!");
+	aval.idInst = 666;
+	aval.id = 4;
+
+	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
+	criou = criaAvaliacao(aval);
+	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
+	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 
@@ -195,7 +217,7 @@ int main(){
 	printf("-------------------------------------------------\n");
 
 
-	// TESTES DE EXCLUSÃO
+	// TESTES DE BUSCA POR INSTITUIÇÃO
 	printf("TESTES DE BUSCA POR INST:\n");
 	printf("-------------------------\n");
 
@@ -230,6 +252,64 @@ int main(){
 		printf("Nenhuma Avaliação encontrada...\n");
 	}
 	printf("-------------------------------------------------\n");
+	printf("-------------------------------------------------\n");
+	printf("-------------------------------------------------\n");
+
+	// TESTES DE BUSCA POR INSTITUIÇÃO
+	printf("TESTES DE BUSCA POR INST:\n");
+	printf("-------------------------\n");
+
+	// caso: encontrado
+	char* nome = "The Jail";
+	printf("Busca Avals do autor %s:\n", nome);
+	
+	buscaAvals = acessaAvaliacoesAluno(nome);
+	if(buscaAvals != NULL){
+		for(Node* p = buscaAvals; p != NULL; p = p->next){
+			printf("Autor: %s\tInst: %d\nTexto:%s\n\n", ((AvalComp*)(p->obj))->autor, 
+				((AvalComp*)(p->obj))->idInst, ((AvalComp*)(p->obj))->texto);
+		}
+		deleteList(buscaAvals);
+	} else {
+		printf("Nenhuma Avaliação encontrada...\n");
+	}
+	printf("-------------------------------------------------\n");	
+
+	// caso: encontrado
+	nome = "Mary Tony";
+	printf("Busca Avals do autor %s:\n", nome);
+	
+	buscaAvals = acessaAvaliacoesAluno(nome);
+	if(buscaAvals != NULL){
+		for(Node* p = buscaAvals; p != NULL; p = p->next){
+			printf("Autor: %s\tInst: %d\nTexto:%s\n\n", ((AvalComp*)(p->obj))->autor, 
+				((AvalComp*)(p->obj))->idInst, ((AvalComp*)(p->obj))->texto);
+		}
+		deleteList(buscaAvals);
+	} else {
+		printf("Nenhuma Avaliação encontrada...\n");
+	}
+	printf("-------------------------------------------------\n");	
+
+	// caso: encontrado
+	nome = "Tony Ramos";
+	printf("Busca Avals do autor %s:\n", nome);
+	
+	buscaAvals = acessaAvaliacoesAluno(nome);
+	if(buscaAvals != NULL){
+		for(Node* p = buscaAvals; p != NULL; p = p->next){
+			printf("Autor: %s\tInst: %d\nTexto:%s\n\n", ((AvalComp*)(p->obj))->autor, 
+				((AvalComp*)(p->obj))->idInst, ((AvalComp*)(p->obj))->texto);
+		}
+		deleteList(buscaAvals);
+	} else {
+		printf("Nenhuma Avaliação encontrada...\n");
+	}
+	printf("-------------------------------------------------\n");	
+	printf("-------------------------------------------------\n");	
+	printf("-------------------------------------------------\n");	
+
+
 
 	return 0;
 }

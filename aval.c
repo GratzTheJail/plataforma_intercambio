@@ -203,4 +203,25 @@ Node* acessaAvaliacoesInst(int idInst){
     return avals;
 }
 
-Node* acessaAvaliacoesAluno(char* nomeUsu);
+Node* acessaAvaliacoesAluno(char* nomeUsu){
+    Node* lst = arq2lst();
+
+    // lista de avaliações q será retornada
+    Node* avals = NULL;
+
+    for(Node* p = lst; p != NULL; p = p->next){
+        Aval* av = (Aval*)(p->obj);
+        
+        // se avaliação atual for do autor desejado, adiciona na lista
+        if(!strcmp(av->autor, nomeUsu)){
+            AvalComp* aval = aval2avcomp(av);
+            avals = preInsert(avals, countNodes(avals));
+
+            avals->obj = (void*)aval;
+        }
+    }
+
+    deleteList(lst);
+
+    return avals;   
+}
