@@ -22,6 +22,7 @@ struct avaliacoes{
 // AUXILIARES
 // ----------
 
+// escreve conteúdo de uma lista no arquivo
 void lst2arq(Node* avals){
     FILE* arq = fopen(ARQUIVO, "w");
     for(; avals != NULL; avals = avals->next){
@@ -34,6 +35,7 @@ void lst2arq(Node* avals){
     fclose(arq);
 }
 
+// transforma arquivo em lista
 Node* arq2lst(){
     FILE* arq = fopen(ARQUIVO, "r");
     Node* lst = NULL;
@@ -53,6 +55,7 @@ Node* arq2lst(){
     return lst;
 }
 
+// transforma Aval* em AvalComp* (aloca espaço para a nova AvalComp)
 AvalComp* aval2avcomp(Aval* av){
     AvalComp* aval = (AvalComp*)malloc(sizeof(AvalComp));
     aval->id     = av->id;
@@ -63,6 +66,7 @@ AvalComp* aval2avcomp(Aval* av){
     return aval;
 }
 
+// transforma AvalComp* em Aval* (aloca espaço para a nova AvalComp)
 Aval* avcomp2aval(AvalComp* aval){
     Aval* av = (Aval*)malloc(sizeof(Aval));
     strcpy(av->autor, aval->autor);
@@ -73,53 +77,62 @@ Aval* avcomp2aval(AvalComp* aval){
     return av;
 }
 
+
 // ---------
 // INTERFACE
 // ---------
 
 
 // id é calculado (independe do parâmetro)
-// uma avaliação NÃO PODE ter no seu campo texto nem autor nenhum caractere ';'
-// TODO: perguntar se podemos mudar algo do q botamos originalmente pq foi uma ideia ruim
+// uma avaliação perderá caracteres ';' nos seus campos texto e autor 
 int criaAvaliacao(AvalComp novaAval){
     Node* lst = arq2lst();
     
+    // retira caracter ';' das strings texto e autor
     for(char* c = strchr(novaAval.texto, ';'); c != NULL; c = strchr(novaAval.texto, ';')){
         strcpy(c, c + 1);
     }
     for(char* c = strchr(novaAval.autor, ';'); c != NULL; c = strchr(novaAval.autor, ';')){
         strcpy(c, c + 1);
     }
-    int id;
     
+    // calcula ID
+    int id;
     if(lst == NULL)
         id = 0;
     else
         id = lst->n + 1;
 
-    lst = preInsert(lst, id);
-    
+    // transforma avaliacao de entrada (AvalComp) em Aval
     novaAval.id = id;
     Aval* av = avcomp2aval(&novaAval);
-
+    
+    // insere na lista
+    lst = preInsert(lst, id);
     lst->obj = (void*)av;
 
+    // escreve no arquivo
     lst2arq(lst);
 
+    // libera memoria
     lst = deleteList(lst);
 
     return 1;
 }
 
+// acessa avaliação com id = idAval
+// caso não encontre retorna NULL
+// retorna ponteiro para a avaliação encontrada (com memória alocada) 
 AvalComp* acessaAvaliacao(int idAval){
     Node* lst = arq2lst();
     
+    // busca no com id especificado
     Node* noAval = findNode(lst, idAval);
     if(noAval == NULL) 
         return NULL;
     
+    // transforma Aval* em AvalComp*
     Aval* av = (Aval*)(noAval->obj);
-    
     AvalComp* aval = aval2avcomp(av);
 
     return aval;
