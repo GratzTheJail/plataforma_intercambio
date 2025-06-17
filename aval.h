@@ -15,8 +15,5 @@ int criaAvaliacao(AvalComp novaAval);
 int modificaAvaliacao(int idAval, AvalComp novaAval);
 int deletaAvaliacao(int idAval);
 
-AvalComp** acessaAvaliacoesInst(int idInst, int* tam);
-AvalComp** acessaAvaliacoesAluno(char* nomeUsu, int* tam);
-
-void lst2arq(Node* avals);
-Node* arq2lst();
+Node* acessaAvaliacoesInst(int idInst);
+Node* acessaAvaliacoesAluno(char* nomeUsu);

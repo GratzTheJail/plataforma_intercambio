@@ -169,14 +169,38 @@ int deletaAvaliacao(int idAval){
     Node* noAval = findNode(lst, idAval);
     if(noAval == NULL) 
         return 0;
-
+    
+    // deleta o nó
     deleteNode(lst, idAval);
 
+    // escreve arquivo e libera espaço
     lst2arq(lst);
     deleteList(lst);
 
     return 1;
 }
 
-AvalComp** acessaAvaliacoesInst(int idInst, int* tam);
-AvalComp** acessaAvaliacoesAluno(char* nomeUsu, int* tam);
+Node* acessaAvaliacoesInst(int idInst){
+    Node* lst = arq2lst();
+
+    // lista de avaliações q será retornada
+    Node* avals = NULL;
+
+    for(Node* p = lst; p != NULL; p = p->next){
+        Aval* av = (Aval*)(p->obj);
+        
+        // se avaliação atual for da inst desejada, adiciona na lista
+        if(av->idInst == idInst){
+            AvalComp* aval = aval2avcomp(av);
+            avals = preInsert(avals, countNodes(avals));
+
+            avals->obj = (void*)aval;
+        }
+    }
+
+    deleteList(lst);
+
+    return avals;
+}
+
+Node* acessaAvaliacoesAluno(char* nomeUsu);

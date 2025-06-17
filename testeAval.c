@@ -60,6 +60,18 @@ int main(){
 	criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
 	printf("-------------------------------------------------\n");
+
+
+	// 3
+	strcpy(aval.autor, "Walter Gratz");
+	strcpy(aval.texto, "Minha faculdade era muito longe... e difícil!");
+	aval.idInst = 123;
+	aval.id = 3;
+	
+	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
+	criou = criaAvaliacao(aval);
+	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
+	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 
@@ -182,6 +194,42 @@ int main(){
 	printf("-------------------------------------------------\n");
 	printf("-------------------------------------------------\n");
 
+
+	// TESTES DE EXCLUSÃO
+	printf("TESTES DE BUSCA POR INST:\n");
+	printf("-------------------------\n");
+
+	// caso: encontrado
+	id = 123;
+	printf("Busca Avals da inst %d:\n", id);
+	
+	Node* buscaAvals = acessaAvaliacoesInst(id);
+	if(buscaAvals != NULL){
+		for(Node* p = buscaAvals; p != NULL; p = p->next){
+			printf("Autor: %s\tInst: %d\nTexto:%s\n\n", ((AvalComp*)(p->obj))->autor, 
+				((AvalComp*)(p->obj))->idInst, ((AvalComp*)(p->obj))->texto);
+		}
+		deleteList(buscaAvals);
+	} else {
+		printf("Nenhuma Avaliação encontrada...\n");
+	}
+	printf("-------------------------------------------------\n");
+
+	// caso: não encontrado
+	id = -9823;
+	printf("Busca Avals da inst %d:\n", id);
+	
+	buscaAvals = acessaAvaliacoesInst(id);
+	if(buscaAvals != NULL){
+		for(Node* p = buscaAvals; p != NULL; p = p->next){
+			printf("Autor: %s\tInst: %d\nTexto:%s\n\n", ((AvalComp*)(p->obj))->autor, 
+				((AvalComp*)(p->obj))->idInst, ((AvalComp*)(p->obj))->texto);
+		}
+		deleteList(buscaAvals);
+	} else {
+		printf("Nenhuma Avaliação encontrada...\n");
+	}
+	printf("-------------------------------------------------\n");
 
 	return 0;
 }
