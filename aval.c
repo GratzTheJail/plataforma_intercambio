@@ -18,7 +18,9 @@ struct avaliacoes{
     int idInst;
 };
 
-Node* avaliacoes = NULL;
+// ----------
+// AUXILIARES
+// ----------
 
 void lst2arq(Node* avals){
     FILE* arq = fopen(ARQUIVO, "w");
@@ -50,6 +52,13 @@ Node* arq2lst(){
     fclose(arq);
     return lst;
 }
+
+
+
+// ---------
+// INTERFACE
+// ---------
+
 
 // id é calculado (independe do parâmetro)
 // uma avaliação NÃO PODE ter no seu campo texto nem autor nenhum caractere ';'
