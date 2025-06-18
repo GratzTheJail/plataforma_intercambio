@@ -1,11 +1,5 @@
-11;Diese ist echt eine peinliche aber gute Universität!;The Jail;666;
-10;Essa faculdade é uma porcaria!;Mary Tony;222;
-9;Minha faculdade era muito longe... e difícil!;Walter Gratz;123;
-8;Ja fui a faculdades melhores...;Isabela Melo;123;
-7;Mellieur faculté de mondé!;Mary Tony;333;
-6;Melhor faculdade do mundo!;The Jail;123;
 5;Diese ist echt eine peinliche aber gute Universität!;The Jail;666;
 4;Essa faculdade é uma porcaria!;Mary Tony;222;
 3;Minha faculdade era muito longe... e difícil!;Walter Gratz;123;
 2;Essa faculdade é meio ruim...;Isabela Melo;123;
-1;Mellieur faculté de mondé!;Mary Tony;333;
+1;Meilleure université du monde!;Mary Tony;333;

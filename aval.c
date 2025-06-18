@@ -25,6 +25,8 @@ struct avaliacoes{
 // escreve conteúdo de uma lista no arquivo
 void lst2arq(Node* avals){
     FILE* arq = fopen(ARQUIVO, "w");
+    if(arq == NULL)
+        exit(1);
     for(; avals != NULL; avals = avals->next){
         Aval* aval = (Aval*)avals->obj;
         fprintf(arq, "%d;", aval->id);
@@ -38,6 +40,9 @@ void lst2arq(Node* avals){
 // transforma arquivo em lista
 Node* arq2lst(){
     FILE* arq = fopen(ARQUIVO, "r");
+    if(arq == NULL)
+        exit(1);
+
     Node* lst = NULL;
     
     for(Aval a; !feof(arq) && 

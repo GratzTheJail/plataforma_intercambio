@@ -17,6 +17,10 @@
 #include <stdio.h>
 
 int main(){
+	// deletando tudo no arquivo
+	FILE* arq = fopen("arquivos/avaliacoes.txt","w");
+	fclose(arq);
+
 	AvalComp aval; 
 	int id = 0;
 	
@@ -39,7 +43,7 @@ int main(){
 	
 	// 1 
 	strcpy(aval.autor, "Mary Tony;");
-	strcpy(aval.texto, "Mellieur; faculté de mondé!");
+	strcpy(aval.texto, "Meilleure; université du monde!");
 	aval.idInst = 333;
 	aval.id = 1;
 
@@ -109,9 +113,12 @@ int main(){
 	AvalComp* busca = acessaAvaliacao(id);
 	if(busca == NULL)
 		printf("Não encontrado :(\n");
-	else
-	 	printf("Encontrado: Autor: %s\tInstituição: %d\nTexto: %s\n", 
+	else{
+		printf("Encontrado: Autor: %s\tInstituição: %d\nTexto: %s\n", 
 			busca->autor, busca->idInst, busca->texto);
+		printf("Note que o caracter ';' foi retirado do texto e do nome\n");
+
+	}
 	
 	// caso: nao encontrado
 	id = -1341;
@@ -187,10 +194,6 @@ int main(){
 	id = 0;
 	// caso: encontrado
 	printf("Exclusão do índice %d:\n", id);
-	
-	printf(">Atenção: caso neste primeiro caso diga que não houve sucesso, ");
-	printf("apague o banco de dados, pois o programa já foi rodado e a entrada já foi exluída.\n");
-	printf(">Quando o banco de dados for deletado, será re-criado com o índice %d nele\n", id);
 
 	if(deletaAvaliacao(id)){
 		busca = acessaAvaliacao(id);
@@ -199,6 +202,10 @@ int main(){
 	} else {
 		printf("Não encontrado...\n");
 	}
+
+	printf(">Atenção: caso neste primeiro caso diga que não houve sucesso, ");
+	printf("apague o banco de dados, pois o programa já foi rodado e a entrada já foi exluída.\n");
+	printf(">Quando o banco de dados for deletado, será re-criado com o índice %d nele\n", id);
 	printf("-------------------------------------------------\n");
 
 	id = -87090;
