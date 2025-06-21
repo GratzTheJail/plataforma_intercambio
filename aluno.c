@@ -1,12 +1,16 @@
-// aluno.c
+/*
+ * Guilherme Melo Gratz 			2211068
+ * João Miguel Rodrigues Montenegro da Franca	2411289
+ * Lorena Silveira dos Santos 			2312667
+*/
+// Modulo Aluno
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "aluno.h"
 
 #define ARQUIVO "arquivos/alunos.txt"
-
-
 
 static Aluno* listaAlunos = NULL;  // lista viva durante a execução
 
