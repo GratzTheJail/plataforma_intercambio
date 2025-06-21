@@ -10,6 +10,15 @@
 #include <stdbool.h>
 #include "alunoComp.h"
 
+typedef struct aluno {
+    char nomeUsu[30];
+    char senha[20];
+    struct aluno* prox;
+} Aluno;
+
+void inicializaAlunos();     // Lê dados do arquivo no início
+void finalizaAlunos();       // Salva dados no arquivo no fim
+
 AlunoComp* acessaAluno(char* nomeUsu);
 bool loginAluno(char* nomeUsu, char* senha);
 int criaAluno(AlunoComp novoAluno);
