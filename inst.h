@@ -1,7 +1,7 @@
 // Modulo Instituições
 
-#ifndef AVALCOMP
-#define AVALCOMP
+#ifndef INSTCOMP
+#define INSTCOMP
 #include "instComp.h"
 #endif
 

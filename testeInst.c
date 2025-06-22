@@ -109,8 +109,8 @@ int main() {
 }
 
 /*
-COMPILAÇÃO
+COMPILACAO
 Sistema: 		Linux Fedora 42 x86_64 - Intel CPU
-Versão do Compilador: 	gcc 15.1.1
+Versao do Compilador: 	gcc 15.1.1
 Comando:		gcc -Wall -o progInst testeInst.c inst.c
 */
