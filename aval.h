@@ -17,3 +17,6 @@ int deletaAvaliacao(int idAval);
 
 Node* acessaAvaliacoesInst(int idInst);
 Node* acessaAvaliacoesAluno(char* nomeUsu);
+
+void init_aval();
+void end_aval();

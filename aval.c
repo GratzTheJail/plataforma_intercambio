@@ -18,6 +18,8 @@ struct avaliacoes{
     int idInst;
 };
 
+static Node* lst = NULL;
+
 // ----------
 // AUXILIARES
 // ----------
@@ -87,12 +89,18 @@ Aval* avcomp2aval(AvalComp* aval){
 // INTERFACE
 // ---------
 
+void init_aval(){
+    lst = arq2lst();
+}
+
+void end_aval(){
+    lst2arq(lst);
+    deleteList(lst);
+}
 
 // id é calculado (independe do parâmetro)
 // uma avaliação perderá caracteres ';' nos seus campos texto e autor 
-int criaAvaliacao(AvalComp novaAval){
-    Node* lst = arq2lst();
-    
+int criaAvaliacao(AvalComp novaAval){    
     // retira caracter ';' das strings texto e autor
     for(char* c = strchr(novaAval.texto, ';'); c != NULL; c = strchr(novaAval.texto, ';')){
         strcpy(c, c + 1);
@@ -116,21 +124,13 @@ int criaAvaliacao(AvalComp novaAval){
     lst = preInsert(lst, id);
     lst->obj = (void*)av;
 
-    // escreve no arquivo
-    lst2arq(lst);
-
-    // libera memoria
-    lst = deleteList(lst);
-
     return 1;
 }
 
 // acessa avaliação com id = idAval
 // caso não encontre retorna NULL
 // retorna ponteiro para a avaliação encontrada (com memória alocada) 
-AvalComp* acessaAvaliacao(int idAval){
-    Node* lst = arq2lst();
-    
+AvalComp* acessaAvaliacao(int idAval){    
     // busca no com id especificado
     Node* noAval = findNode(lst, idAval);
     if(noAval == NULL) 
@@ -140,17 +140,13 @@ AvalComp* acessaAvaliacao(int idAval){
     Aval* av = (Aval*)(noAval->obj);
     AvalComp* aval = aval2avcomp(av);
 
-    deleteList(lst);
-
     return aval;
 }
 
 // apenas texto será modificado
 // não lida com problemas de string 
 // retorna 1 se modificou e 0 se não encontrou
-int modificaAvaliacao(int idAval, AvalComp novaAval){
-    Node* lst = arq2lst();
-    
+int modificaAvaliacao(int idAval, AvalComp novaAval){    
     // busca no com id especificado
     Node* noAval = findNode(lst, idAval);
     if(noAval == NULL) 
@@ -160,16 +156,10 @@ int modificaAvaliacao(int idAval, AvalComp novaAval){
     Aval* av = (Aval*)(noAval->obj);
     strcpy(av->texto, novaAval.texto);
 
-    // escreve e libera memoria
-    lst2arq(lst);
-    deleteList(lst);
-
     return 1;
 }
 
-int deletaAvaliacao(int idAval){
-    Node* lst = arq2lst();
-    
+int deletaAvaliacao(int idAval){    
     // busca no com id especificado
     Node* noAval = findNode(lst, idAval);
     if(noAval == NULL) 
@@ -178,16 +168,10 @@ int deletaAvaliacao(int idAval){
     // deleta o nó
     deleteNode(lst, idAval);
 
-    // escreve arquivo e libera espaço
-    lst2arq(lst);
-    deleteList(lst);
-
     return 1;
 }
 
 Node* acessaAvaliacoesInst(int idInst){
-    Node* lst = arq2lst();
-
     // lista de avaliações q será retornada
     Node* avals = NULL;
 
@@ -203,14 +187,10 @@ Node* acessaAvaliacoesInst(int idInst){
         }
     }
 
-    deleteList(lst);
-
     return avals;
 }
 
 Node* acessaAvaliacoesAluno(char* nomeUsu){
-    Node* lst = arq2lst();
-
     // lista de avaliações q será retornada
     Node* avals = NULL;
 
@@ -225,8 +205,6 @@ Node* acessaAvaliacoesAluno(char* nomeUsu){
             avals->obj = (void*)aval;
         }
     }
-
-    deleteList(lst);
 
     return avals;   
 }

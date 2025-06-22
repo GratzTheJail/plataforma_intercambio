@@ -21,12 +21,15 @@ int main(){
 	FILE* arq = fopen("arquivos/avaliacoes.txt","w");
 	fclose(arq);
 
+	// inicializa BD
+	init_aval();
+	
 	AvalComp aval; 
 	int id = 0;
 	
 	// TESTES INSERÇÃO
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 	printf("TESTES DE INSERÇÃO:\n");
 	printf("-------------------\n");
 	
@@ -39,7 +42,7 @@ int main(){
 	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
 	int criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 	
 	// 1 
 	strcpy(aval.autor, "Mary Tony;");
@@ -50,7 +53,7 @@ int main(){
 	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
 	criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 	
 	
 	// 2
@@ -63,7 +66,7 @@ int main(){
 		aval.autor, aval.idInst, aval.texto);
 	criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 
 	// 3
@@ -75,7 +78,7 @@ int main(){
 	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
 	criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 	// 4
 	strcpy(aval.autor, "Mary Tony;");
@@ -86,7 +89,7 @@ int main(){
 	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
 	criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 	// 5
 	strcpy(aval.autor, "The Jail");
@@ -97,9 +100,9 @@ int main(){
 	printf("Inserção de:\tAutor: %s\tInstituição: %d\nTexto: %s\n", aval.autor, aval.idInst, aval.texto);
 	criou = criaAvaliacao(aval);
 	printf((criou) ? ("Sucesso! :)\n"):("Fracasso! :(\n"));
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 
 
@@ -122,7 +125,7 @@ int main(){
 	
 	// caso: nao encontrado
 	id = -1341;
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 	printf("Busca do índice %d:\n", id);
 	busca = acessaAvaliacao(id);
 	if(busca == NULL)
@@ -132,9 +135,9 @@ int main(){
 			busca->autor, busca->idInst, busca->texto);
 	
 	free(busca);
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 
 
@@ -161,7 +164,7 @@ int main(){
 	} else {
 		printf("Não encontrado...\n");
 	}
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 	// caso: nao encontrado
 	id = -2342;
@@ -181,15 +184,15 @@ int main(){
 	} else {
 		printf("Não encontrado...\n");
 	}
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 	
 	
 	// TESTES DE EXCLUSÃO
 	printf("TESTES DE EXCLUSÃO:\n");
-	printf("----------------------\n");
+	printf("-------------------\n");
 	
 	id = 0;
 	// caso: encontrado
@@ -203,10 +206,10 @@ int main(){
 		printf("Não encontrado...\n");
 	}
 
-	printf(">Atenção: caso neste primeiro caso diga que não houve sucesso, ");
-	printf("apague o banco de dados, pois o programa já foi rodado e a entrada já foi exluída.\n");
-	printf(">Quando o banco de dados for deletado, será re-criado com o índice %d nele\n", id);
-	printf("-------------------------------------------------\n");
+	// printf(">Atenção: caso neste primeiro caso diga que não houve sucesso, ");
+	// printf("apague o banco de dados, pois o programa já foi rodado e a entrada já foi exluída.\n");
+	// printf(">Quando o banco de dados for deletado, será re-criado com o índice %d nele\n", id);
+	printf("------------------------------------------------------------------------\n");
 
 	id = -87090;
 	// caso: não encontrado
@@ -219,9 +222,9 @@ int main(){
 	} else {
 		printf("Não encontrado...\n");
 	}
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 
 	// TESTES DE BUSCA POR INSTITUIÇÃO
@@ -242,7 +245,7 @@ int main(){
 	} else {
 		printf("Nenhuma Avaliação encontrada...\n");
 	}
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
 	// caso: não encontrado
 	id = -9823;
@@ -258,13 +261,13 @@ int main(){
 	} else {
 		printf("Nenhuma Avaliação encontrada...\n");
 	}
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
-	printf("-------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------------------\n");
 
-	// TESTES DE BUSCA POR INSTITUIÇÃO
-	printf("TESTES DE BUSCA POR INST:\n");
-	printf("-------------------------\n");
+	// TESTES DE BUSCA POR AUTOR
+	printf("TESTES DE BUSCA POR AUTOR:\n");
+	printf("--------------------------\n");
 
 	// caso: encontrado
 	char* nome = "The Jail";
@@ -280,7 +283,7 @@ int main(){
 	} else {
 		printf("Nenhuma Avaliação encontrada...\n");
 	}
-	printf("-------------------------------------------------\n");	
+	printf("------------------------------------------------------------------------\n");	
 
 	// caso: encontrado
 	nome = "Mary Tony";
@@ -296,7 +299,7 @@ int main(){
 	} else {
 		printf("Nenhuma Avaliação encontrada...\n");
 	}
-	printf("-------------------------------------------------\n");	
+	printf("------------------------------------------------------------------------\n");	
 
 	// caso: encontrado
 	nome = "Tony Ramos";
@@ -312,12 +315,12 @@ int main(){
 	} else {
 		printf("Nenhuma Avaliação encontrada...\n");
 	}
-	printf("-------------------------------------------------\n");	
-	printf("-------------------------------------------------\n");	
-	printf("-------------------------------------------------\n");	
+	printf("------------------------------------------------------------------------\n");	
+	printf("------------------------------------------------------------------------\n");	
+	printf("------------------------------------------------------------------------\n");	
 
-
-
+	// persiste BD
+	end_aval();
 	return 0;
 }
 
