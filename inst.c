@@ -20,11 +20,11 @@ static Inst* lst = NULL;
 
 void inicializaInst() {
     FILE* arq = fopen(ARQUIVO, "r");
-    if (!arq) return NULL;
+    if (!arq) return;
 
     int id;
     char nome[50], pais[25], senha[20];
-    while (fscanf(arq, "%d;%49[^;];%24[^;];%19[^;];\n", id, nome, pais, senha) == 2) {
+    while (fscanf(arq, "%d;%49[^;];%24[^;];%19[^;];\n", &(id), nome, pais, senha) == 4) {
         Inst* novo = (Inst*)malloc(sizeof(Inst));
         novo->id = id;
         strcpy(novo->nome, nome);
@@ -42,7 +42,7 @@ void finalizaInst() {
     if (!arq) return;
 
     for (Inst* p = lst; p; p = p->prox)
-        fprintf(arq, "%d;%s;%s;%s;\n", lst->id, lst->nome, lst->pais, lst->senha);
+        fprintf(arq, "%d;%s;%s;%s;\n", p->id, p->nome, p->pais, p->senha);
 
     // Libera memória
     Inst* temp;
@@ -91,19 +91,19 @@ bool loginInst(int id, char* senha) {
     if (!i) return false;  
 
     bool ok = strcmp(i->senha, senha) == 0;  
-    free(a);
+    free(i);
     return ok;
 }
 
 int criaInst(InstComp novaInst) {
-    if (strlen(novaInst.nome) == 0) return 0;  
+    if (strlen(novaInst.nome) == 0 || strlen(novaInst.senha) == 0) return 0;
 
     int id = 1;
-    for (Inst* p = lst; p != NULL; p = p->prox) {
+    for (Inst* p = lst; p; p = p->prox) {
         if (!strcmp(p->nome, novaInst.nome)) {  
             return 0;
         }
-        ++i; //garante que o id sempre vai ser diferente dos que ja existem
+        ++id; //garante que o id sempre vai ser diferente dos que ja existem
     }
     novaInst.id = id;
 
@@ -115,12 +115,12 @@ int criaInst(InstComp novaInst) {
 }
 
 InstComp* modificaInst(int id, InstComp novaInst) {
-    for (Inst* p = lst; p != NULL; p = p->prox) {
-        if (p->id != id && p->nome == novaInst.nome) { //nome ja existe para outro id
+    for (Inst* p = lst; p; p = p->prox) {
+        if (p->id != id && !strcmp(p->nome, novaInst.nome)) { //nome ja existe para outro id
             return NULL;
         }
     }
-    for (Inst* p = lst; p != NULL; p = p->prox) {
+    for (Inst* p = lst; p; p = p->prox) {
         if (p->id == id) {
             strcpy(p->nome, novaInst.nome);
             strcpy(p->pais, novaInst.pais);
@@ -136,7 +136,7 @@ int deletaInst(int id) {
     Inst* ant = NULL, * p = lst;
 
     while (p) {
-        if (p->id = id) {
+        if (p->id == id) {
             if (ant == NULL) lst = p->prox;  
             else ant->prox = p->prox;        
             free(p);

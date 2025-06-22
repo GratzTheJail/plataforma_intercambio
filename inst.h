@@ -7,8 +7,10 @@
 
 #include <stdbool.h>
 
+void inicializaInst();
+void finalizaInst();
 InstComp* acessaInst(int idInst);
 bool loginInst(int idInst, char* senha);
-InstComp* criaInst(InstComp novaInst);
+int criaInst(InstComp novaInst);
 InstComp* modificaInst(int idInst, InstComp novaInst);
 int deletaInst(int idInst);

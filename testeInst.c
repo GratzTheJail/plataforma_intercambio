@@ -24,14 +24,14 @@ int main() {
     strcpy(i.pais, "Brasil");
     strcpy(i.senha, "1234");
     int criacao1 = criaInst(i);
-    imprimeResultado("criaInst - Caso 2: Instituicao 'PUC' do pais 'Brasil' criada com sucesso", 1, criacao1);
+    imprimeResultado("criaInst - Caso 2: Instituicao 'PUC' do pais 'Brasil' criada com sucesso", 1, (criacao1 != 0));
 
     InstComp repetido;
     strcpy(repetido.nome, "PUC");
     strcpy(repetido.pais, "Brasil");
     strcpy(repetido.senha, "5678");
     int criacao2 = criaInst(repetido);
-    imprimeResultado("criaInst - Caso 1: Nome de instituicao 'PUC' já existe", 0, criacao2);
+    imprimeResultado("criaInst - Caso 1: Nome de instituicao 'PUC' ja existe", 0, criacao2);
 
     InstComp vazio;
     strcpy(vazio.nome, "");
@@ -55,7 +55,7 @@ int main() {
 
     // --- Testes de login ---
 
-    imprimeResultado("loginInst - Caso 3: Login válido para 'PUC'", 1, loginInst(1, "1234"));
+    imprimeResultado("loginInst - Caso 3: Login valido para 'PUC'", 1, loginInst(1, "1234"));
     imprimeResultado("loginInst - Caso 2: Senha errada para 'PUC'", 0, loginInst(1, "errada"));
     imprimeResultado("loginInst - Caso 1: ID inexistente '-1'", 0, loginInst(-1, "qualquer"));
 
@@ -66,42 +66,40 @@ int main() {
     free(acesso1);
 
     InstComp* acesso2 = acessaInst(-1);
-    imprimeResultado("acessaInst - Caso 2: Instituicao de ID '-1' não encontrada", 0, acesso2 != NULL);
+    imprimeResultado("acessaInst - Caso 2: Instituicao de ID '-1' nao encontrada", 0, acesso2 != NULL);
     free(acesso2);
 
     // --- Testes de modificação ---
 
     InstComp novo;
-    novo.id = 2;
     strcpy(novo.nome, "UERJ");  // muda o nome
     strcpy(novo.pais, "Brasil");
     strcpy(novo.senha, "4321");
-    InstComp* modificado = modificaInst(1, novo);
+    InstComp* modificado = modificaInst(2, novo);
     imprimeResultado("modificaInst - Caso 1: Instituicao de ID '2' modificada", 1, modificado != NULL);
-    imprimeResultado("loginInst - Após modificação de senha para a instituicao", 1, loginInst(1, "4321"));
+    imprimeResultado("loginInst - Apos modificacao de senha para a instituicao", 1, loginInst(2, "4321"));
     free(modificado);
 
     InstComp* naoModificado = modificaInst(-1, novo);
-    imprimeResultado("modificaInst - Caso 2: Instituicao de ID '-1' (inexistente) não modificada", 0, naoModificado != NULL);
+    imprimeResultado("modificaInst - Caso 2: Instituicao de ID '-1' (inexistente) nao modificada", 0, naoModificado != NULL);
     free(naoModificado);
 
     InstComp nomeRepetido;
-    nomeRepetido.id = 1;
     strcpy(nomeRepetido.nome, "UERJ");  //nome que ja existe no id 2
     strcpy(nomeRepetido.pais, "Brasil");
     strcpy(nomeRepetido.senha, "4321");
-    InstComp* modificado = modificaInst(1, novo);
-    imprimeResultado("modificaInst - Caso 3: Instituicao de ID '2' ja possuia o nome a ser modificado", 0, modificado != NULL);
-    free(modificado);
+    InstComp* modificadoRepetido = modificaInst(1, novo);
+    imprimeResultado("modificaInst - Caso 3: Instituicao de ID '2' ja possuia o nome a ser modificado", 0, modificadoRepetido != NULL);
+    free(modificadoRepetido);
 
     // --- Testes de deleção ---
 
     int del1 = deletaInst(2);
     imprimeResultado("deletaInst - Caso 2: Instituicao de ID '2' deletada com sucesso", 1, del1);
-    imprimeResultado("loginInst - Após deletar ID '2'", 0, loginInst(2, "4321"));
+    imprimeResultado("loginInst - Apos deletar ID '2'", 0, loginInst(2, "4321"));
 
     int del2 = deletaInst(-1);
-    imprimeResultado("deletaInst - Caso 1: ID '-1' não encontrado", 0, del2);
+    imprimeResultado("deletaInst - Caso 1: ID '-1' nao encontrado", 0, del2);
 
     // Salva os dados atualizados no arquivo
     finalizaInst();
