@@ -16,11 +16,11 @@ struct instituicoes {
     Inst* prox;
 };
 
-static Inst* arq2lst() {
-    FILE* arq = fopen(ARQUIVO, "r");
-    if (!arq) return NULL;  
+static Inst* lst = NULL; 
 
-    Inst* lst = NULL;
+void inicializaInst() {
+    FILE* arq = fopen(ARQUIVO, "r");
+    if (!arq) return NULL;
 
     int id;
     char nome[50], pais[25], senha[20];
@@ -30,31 +30,29 @@ static Inst* arq2lst() {
         strcpy(novo->nome, nome);
         strcpy(novo->pais, pais);
         strcpy(novo->senha, senha);
-        novo->prox = lst; 
+        novo->prox = lst;
         lst = novo;
     }
 
     fclose(arq);
-    return lst;
 }
 
-static void lst2arq(Inst* lst) {
+void finalizaInst() {
     FILE* arq = fopen(ARQUIVO, "w");
     if (!arq) return;
 
-    for (; lst != NULL; lst = lst->prox) {
+    for (Inst* p = lst; p; p = p->prox)
         fprintf(arq, "%d;%s;%s;%s;\n", lst->id, lst->nome, lst->pais, lst->senha);
-    }
 
-    fclose(arq);
-}
-
-static void liberaLista(Inst* lst) {
+    // Libera memória
+    Inst* temp;
     while (lst) {
-        Inst* temp = lst;
+        temp = lst;
         lst = lst->prox;
         free(temp);
     }
+
+    fclose(arq);
 }
 
 static InstComp* inst2comp(Inst* i) {
@@ -78,16 +76,13 @@ static Inst* comp2inst(InstComp* ic) {
 }
 
 InstComp* acessaInst(int id) {
-    Inst* lst = arq2lst();
     Inst* p;
     for (p = lst; p != NULL; p = p->prox) {
         if (p->id == id) {  
             InstComp* res = inst2comp(p);
-            liberaLista(lst);
             return res;
         }
     }
-    liberaLista(lst);
     return NULL;
 }
 
@@ -103,56 +98,53 @@ bool loginInst(int id, char* senha) {
 int criaInst(InstComp novaInst) {
     if (strlen(novaInst.nome) == 0) return 0;  
 
-    Inst* lst = arq2lst();
+    int id = 1;
     for (Inst* p = lst; p != NULL; p = p->prox) {
-        if (!strcmp(p->nome, novaInst.nome) || (p->id == novaInst.id)) {  //verifica tambem se ja existe uma instituicao com esse id
-            liberaLista(lst);
+        if (!strcmp(p->nome, novaInst.nome)) {  
             return 0;
         }
+        ++i; //garante que o id sempre vai ser diferente dos que ja existem
     }
+    novaInst.id = id;
 
     Inst* novo = comp2inst(&novaInst);
     novo->prox = lst;
     lst = novo;
 
-    lst2arq(lst);     
-    liberaLista(lst);  
-    return 1;         
+    return id;         
 }
 
 InstComp* modificaInst(int id, InstComp novaInst) {
-    Inst* lst = arq2lst();
+    for (Inst* p = lst; p != NULL; p = p->prox) {
+        if (p->id != id && p->nome == novaInst.nome) { //nome ja existe para outro id
+            return NULL;
+        }
+    }
     for (Inst* p = lst; p != NULL; p = p->prox) {
         if (p->id == id) {
-            strcpy(p->nome, novaInst.nome);  
+            strcpy(p->nome, novaInst.nome);
             strcpy(p->pais, novaInst.pais);
-            strcpy(p->senha, novaInst.senha);   
+            strcpy(p->senha, novaInst.senha);
             InstComp* res = inst2comp(p);
-            lst2arq(lst);
-            liberaLista(lst);
             return res;
         }
     }
-    liberaLista(lst);
     return NULL;  
 }
 
 int deletaInst(int id) {
-    Inst* lst = arq2lst(), * ant = NULL, * p = lst;
+    Inst* ant = NULL, * p = lst;
 
     while (p) {
         if (p->id = id) {
             if (ant == NULL) lst = p->prox;  
             else ant->prox = p->prox;        
             free(p);
-            lst2arq(lst);
-            liberaLista(lst);
             return 1; 
         }
         ant = p;
         p = p->prox;
     }
 
-    liberaLista(lst);
     return 0;  
 }
