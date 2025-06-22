@@ -107,3 +107,10 @@ int main() {
     printf("****** FIM DOS TESTES ******\n");
     return 0;
 }
+
+/*
+COMPILAÇÃO
+Sistema: 		Linux Fedora 42 x86_64 - Intel CPU
+Versão do Compilador: 	gcc 15.1.1
+Comando:		gcc -Wall -o progInst testeInst.c inst.c
+*/
