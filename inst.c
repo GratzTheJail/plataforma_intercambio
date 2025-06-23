@@ -80,6 +80,7 @@ static Inst* comp2inst(InstComp* ic) {
 }
 
 // acessa uma instituição com o id passado
+// retorna o tipo compartilhado InstComp da instituição buscada, NULL caso não encontre
 InstComp* acessaInst(int id) {
     Inst* p;
     for (p = lst; p != NULL; p = p->prox) {
@@ -91,7 +92,7 @@ InstComp* acessaInst(int id) {
     return NULL;
 }
 
-// retorna se o login foi bem sucedido (id e senha corretos)
+// retorna true se o login foi bem sucedido (id e senha corretos), false caso contrario
 bool loginInst(int id, char* senha) {
     InstComp* i = acessaInst(id);
     if (!i) return false;  
@@ -103,6 +104,7 @@ bool loginInst(int id, char* senha) {
 
 // cria uma instituição com os dados especificados por novaInst
 // calcula o proprio id (id novaInst ignorado)
+// retorna 0 caso já tenha sido adicionado ou o id adicionado 
 int criaInst(InstComp novaInst) {
     if (strlen(novaInst.nome) == 0 || strlen(novaInst.senha) == 0) return 0;
 
@@ -123,6 +125,7 @@ int criaInst(InstComp novaInst) {
 }
 
 // modifica instituição de id passado com os dados passados em novaInst
+// retorna NULL caso não seja encontrado ou o tipo compartilhado de instituição modificado
 InstComp* modificaInst(int id, InstComp novaInst) {
     for (Inst* p = lst; p; p = p->prox) {
         if (p->id != id && !strcmp(p->nome, novaInst.nome)) { //nome ja existe para outro id
@@ -142,6 +145,7 @@ InstComp* modificaInst(int id, InstComp novaInst) {
 }
 
 // deleta instituição de id passado
+// retorna 1 se foi deletado, 0 caso não seja encontrado
 int deletaInst(int id) {
     Inst* ant = NULL, * p = lst;
 
