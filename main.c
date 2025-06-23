@@ -171,10 +171,10 @@ int main() {
                     printf("\n--- Suas Avaliacoes ---\n");
                     Node* atual = lista;
                     while (atual != NULL) {
-                        AvalComp* a = &(atual->aval);
+                        AvalComp* a = (AvalComp*)atual->obj;
                         printf("- ID: %d | Inst: %d\n", a->id, a->idInst);
                         printf("  \"%s\"\n", a->texto);
-                        atual = atual->prox;
+                        atual = atual->next;
                     }
                 }
 
@@ -277,7 +277,7 @@ int main() {
                 }
                 else {
                     printf("\n--- Perfil da Instituicao ---\n");
-                    printf("ID: %d\n", inst->idInst);
+                    printf("ID: %d\n", inst->id);
                     printf("Nome: %s\n", inst->nome);
                     printf("Pais: %s\n", inst->pais);
 
@@ -289,10 +289,10 @@ int main() {
                     else {
                         Node* atual = lista;
                         while (atual != NULL) {
-                            AvalComp* a = &(atual->aval);
+                            AvalComp* a = (AvalComp*)atual->obj;
                             printf("- Avaliacao #%d por %s:\n", a->id, a->autor);
                             printf("  \"%s\"\n\n", a->texto);
-                            atual = atual->prox;
+                            atual = atual->next;
                         }
                     }
                 }
@@ -314,7 +314,7 @@ int main() {
 
             if (opInst == 1) {
                 InstComp nova;
-                nova.idInst = instAtual->idInst;
+                nova.id = instAtual->id;
                 printf("Novo nome: ");
                 fgets(nova.nome, sizeof(nova.nome), stdin);
                 nova.nome[strcspn(nova.nome, "\n")] = '\0';
@@ -327,7 +327,7 @@ int main() {
                 fgets(nova.senha, sizeof(nova.senha), stdin);
                 nova.senha[strcspn(nova.senha, "\n")] = '\0';
 
-                if (modificaInst(instAtual->idInst, nova) != NULL) {
+                if (modificaInst(instAtual->id, nova) != NULL) {
                     printf("Dados modificados com sucesso!\n");
                 }
                 else {
@@ -336,7 +336,7 @@ int main() {
 
             }
             else if (opInst == 2) {
-                if (deletaInst(instAtual->idInst) == 1) {
+                if (deletaInst(instAtual->id) == 1) {
                     printf("Conta deletada.\n");
                     instLogin = false;
                 }
@@ -349,19 +349,19 @@ int main() {
                 printf("\nPerfil da Instituicao:\n");
                 printf("Nome: %s\n", instAtual->nome);
                 printf("Pais: %s\n", instAtual->pais);
-                printf("ID: %d\n", instAtual->idInst);
+                printf("ID: %d\n", instAtual->id);
                 printf("\n--- Avaliacoes Recebidas ---\n");
-                Node* lista = acessaAvaliacoesInst(instAtual->idInst);
+                Node* lista = acessaAvaliacoesInst(instAtual->id);
                 if (lista == NULL) {
                     printf("Nenhuma avaliacao ainda.\n");
                 }
                 else {
                     Node* atual = lista;
                     while (atual != NULL) {
-                        AvalComp* a = &(atual->aval);
+                        AvalComp* a = (AvalComp*)atual->obj;
                         printf("- Avaliacao #%d por %s:\n", a->id, a->autor);
                         printf("  \"%s\"\n\n", a->texto);
-                        atual = atual->prox;
+                        atual = atual->next;
                     }
                 }
             }
