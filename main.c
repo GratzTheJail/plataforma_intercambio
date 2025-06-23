@@ -22,6 +22,7 @@ int main() {
 
     inicializaAlunos();
     inicializaInst();
+    init_aval();
 
     while (continuar == 's' || continuar == 'S') {
         if (!alunoLogin && !instLogin) {
@@ -377,6 +378,7 @@ int main() {
 
     finalizaAlunos();
     finalizaInst();
+    end_aval();
 
     printf("Encerrando o programa...\n");
     return 0;
