@@ -1,5 +1,0 @@
-5;Diese ist echt eine peinliche aber gute Universität!;The Jail;666;
-4;Essa faculdade é uma porcaria!;Mary Tony;222;
-3;Minha faculdade era muito longe... e difícil!;Walter Gratz;123;
-2;Essa faculdade é meio ruim...;Isabela Melo;123;
-1;Meilleure université du monde!;Mary Tony;333;

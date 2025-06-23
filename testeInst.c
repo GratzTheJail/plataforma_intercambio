@@ -6,18 +6,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Função auxiliar para imprimir o resultado dos testes
+// Funï¿½ï¿½o auxiliar para imprimir o resultado dos testes
 void imprimeResultado(char* descricao, int esperado, int obtido) {
     printf("%s\nEsperado: %d | Obtido: %d\n\n", descricao, esperado, obtido);
 }
 
 int main() {
     printf(" ****** TESTES MODULO INSTITUICAO ******\n\n");
+    
+    // deletando tudo no arquivo
+	FILE* arq = fopen("arquivos/avaliacoes.txt","w");
+	fclose(arq);
 
-    // Lê o arquivo de instituicoes uma única vez
+    // Lï¿½ o arquivo de instituicoes uma ï¿½nica vez
     inicializaInst();
 
-    // --- Testes de criação de instituicao ---
+    // --- Testes de criaï¿½ï¿½o de instituicao ---
 
     InstComp i;
     strcpy(i.nome, "PUC");
@@ -69,7 +73,7 @@ int main() {
     imprimeResultado("acessaInst - Caso 2: Instituicao de ID '-1' nao encontrada", 0, acesso2 != NULL);
     free(acesso2);
 
-    // --- Testes de modificação ---
+    // --- Testes de modificaï¿½ï¿½o ---
 
     InstComp novo;
     strcpy(novo.nome, "UERJ");  // muda o nome
@@ -92,7 +96,7 @@ int main() {
     imprimeResultado("modificaInst - Caso 3: Instituicao de ID '2' ja possuia o nome a ser modificado", 0, modificadoRepetido != NULL);
     free(modificadoRepetido);
 
-    // --- Testes de deleção ---
+    // --- Testes de deleï¿½ï¿½o ---
 
     int del1 = deletaInst(2);
     imprimeResultado("deletaInst - Caso 2: Instituicao de ID '2' deletada com sucesso", 1, del1);
