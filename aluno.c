@@ -31,7 +31,7 @@ void inicializaAlunos() {
     fclose(arq);
 }
 
-// Grava a lista no arquivo e libera a memória
+// objetivo: Grava a lista no arquivo e libera a memória
 void finalizaAlunos() {
     FILE* arq = fopen(ARQUIVO, "w");
     if (!arq) return;
@@ -50,7 +50,7 @@ void finalizaAlunos() {
     fclose(arq);
 }
 
-// Conversões
+// objetivo: Conversão de aluno para aluno compartilhado
 static AlunoComp* aluno2comp(Aluno* a) {
     if (!a) return NULL;
     AlunoComp* ac = malloc(sizeof(AlunoComp));
@@ -58,7 +58,7 @@ static AlunoComp* aluno2comp(Aluno* a) {
     strcpy(ac->senha, a->senha);
     return ac;
 }
-
+//Conversão de aluno compartilhado para aluno
 static Aluno* comp2aluno(AlunoComp* ac) {
     Aluno* a = malloc(sizeof(Aluno));
     strcpy(a->nomeUsu, ac->nomeUsu);
@@ -67,14 +67,16 @@ static Aluno* comp2aluno(AlunoComp* ac) {
     return a;
 }
 
-// Funções de acesso
+// Funções de acesso 
+// objetivo: Acessa um aluno pelo nome de usuário
+// Retorna um ponteiro para AlunoComp ou NULL se não encontrar
 AlunoComp* acessaAluno(char* nomeUsu) {
     for (Aluno* p = listaAlunos; p; p = p->prox)
         if (!strcmp(p->nomeUsu, nomeUsu))
             return aluno2comp(p);
     return NULL;
 }
-
+// objetivo: Verifica se o login do aluno é válido
 bool loginAluno(char* nomeUsu, char* senha) {
     AlunoComp* a = acessaAluno(nomeUsu);
     if (!a) return false;
@@ -82,7 +84,10 @@ bool loginAluno(char* nomeUsu, char* senha) {
     free(a);
     return ok;
 }
-
+// objetivo: Cria um novo aluno na lista
+// Retorna 1 se conseguiu criar, 0 se o nome de usuário já existe ou se o nome de usuário for vazio
+// Se o nome de usuário já existir, não altera a lista
+// Se o nome de usuário for vazio, não cria o aluno
 int criaAluno(AlunoComp novoAluno) {
     if (strlen(novoAluno.nomeUsu) == 0) return 0;
 
@@ -95,7 +100,9 @@ int criaAluno(AlunoComp novoAluno) {
     listaAlunos = novo;
     return 1;
 }
-
+// objetivo: Modifica os dados de um aluno na lista
+// Retorna um ponteiro para AlunoComp com os dados atualizados ou NULL se não encontrar o aluno
+// Se não encontrar o aluno, não altera a lista
 AlunoComp* modificaAluno(char* nomeUsu, AlunoComp novoAluno) {
     for (Aluno* p = listaAlunos; p; p = p->prox) {
         if (!strcmp(p->nomeUsu, nomeUsu)) {
@@ -106,7 +113,8 @@ AlunoComp* modificaAluno(char* nomeUsu, AlunoComp novoAluno) {
     }
     return NULL;
 }
-
+// objetivo: Deleta um aluno da lista
+// Retorna 1 se conseguiu deletar, 0 se não encontrar o aluno
 int deletaAluno(char* nomeUsu) {
     Aluno *p = listaAlunos, *ant = NULL;
     while (p) {
