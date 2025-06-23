@@ -18,6 +18,7 @@ struct instituicoes {
 
 static Inst* lst = NULL; 
 
+// carrega dados persistidos no começo do programa
 void inicializaInst() {
     FILE* arq = fopen(ARQUIVO, "r");
     if (!arq) return;
@@ -37,6 +38,7 @@ void inicializaInst() {
     fclose(arq);
 }
 
+// persiste dados ao final do programa
 void finalizaInst() {
     FILE* arq = fopen(ARQUIVO, "w");
     if (!arq) return;
@@ -55,6 +57,7 @@ void finalizaInst() {
     fclose(arq);
 }
 
+// transforma do tipo compartilhado inst para instcomp 
 static InstComp* inst2comp(Inst* i) {
     if (!i) return NULL;
     InstComp* ic = malloc(sizeof(InstComp));
@@ -65,6 +68,7 @@ static InstComp* inst2comp(Inst* i) {
     return ic;
 }
 
+// transforma do tipo compartilhado instcomp para inst 
 static Inst* comp2inst(InstComp* ic) {
     Inst* i = malloc(sizeof(Inst));
     i->id = ic->id;
@@ -75,6 +79,7 @@ static Inst* comp2inst(InstComp* ic) {
     return i;
 }
 
+// acessa uma instituição com o id passado
 InstComp* acessaInst(int id) {
     Inst* p;
     for (p = lst; p != NULL; p = p->prox) {
@@ -86,6 +91,7 @@ InstComp* acessaInst(int id) {
     return NULL;
 }
 
+// retorna se o login foi bem sucedido (id e senha corretos)
 bool loginInst(int id, char* senha) {
     InstComp* i = acessaInst(id);
     if (!i) return false;  
@@ -95,6 +101,8 @@ bool loginInst(int id, char* senha) {
     return ok;
 }
 
+// cria uma instituição com os dados especificados por novaInst
+// calcula o proprio id (id novaInst ignorado)
 int criaInst(InstComp novaInst) {
     if (strlen(novaInst.nome) == 0 || strlen(novaInst.senha) == 0) return 0;
 
@@ -114,6 +122,7 @@ int criaInst(InstComp novaInst) {
     return id;         
 }
 
+// modifica instituição de id passado com os dados passados em novaInst
 InstComp* modificaInst(int id, InstComp novaInst) {
     for (Inst* p = lst; p; p = p->prox) {
         if (p->id != id && !strcmp(p->nome, novaInst.nome)) { //nome ja existe para outro id
@@ -132,6 +141,7 @@ InstComp* modificaInst(int id, InstComp novaInst) {
     return NULL;  
 }
 
+// deleta instituição de id passado
 int deletaInst(int id) {
     Inst* ant = NULL, * p = lst;
 

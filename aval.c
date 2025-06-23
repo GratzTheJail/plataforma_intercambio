@@ -171,6 +171,7 @@ int deletaAvaliacao(int idAval){
     return 1;
 }
 
+// acessa todas avals de uma inst de IdInst
 Node* acessaAvaliacoesInst(int idInst){
     // lista de avaliações q será retornada
     Node* avals = NULL;
@@ -190,6 +191,7 @@ Node* acessaAvaliacoesInst(int idInst){
     return avals;
 }
 
+// acessa todas avals de um aluno
 Node* acessaAvaliacoesAluno(char* nomeUsu){
     // lista de avaliações q será retornada
     Node* avals = NULL;
