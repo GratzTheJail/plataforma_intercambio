@@ -1,4 +1,4 @@
-# Plataforma Intercambio
+# Plataforma de Intercambio (Programação Modular)
 O projeto cria um aplicativo cli básico de um aplicativo de avaliação de intercâmbios usando sistema de CRUD básico.
 
 O objetivo é garantir os conceitos da modularização.
